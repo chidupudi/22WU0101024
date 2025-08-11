@@ -2,8 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Container, AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { 
+  Container, 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Button, 
+  Box,
+  useMediaQuery,
+  IconButton,
+  Menu,
+  MenuItem
+} from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 import { initializeLogging, Log } from './utils/logger';
 import UrlShortenerPage from './pages/UrlShortenerPage';
@@ -23,10 +35,21 @@ const theme = createTheme({
 
 function Navigation() {
   const navigate = useNavigate();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [anchorEl, setAnchorEl] = useState(null);
   
   const handleNavigation = async (path, pageName) => {
     await Log("frontend", "info", "component", `Navigating to ${pageName}`);
     navigate(path);
+    setAnchorEl(null);
+  };
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -35,18 +58,41 @@ function Navigation() {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           URL Shortener
         </Typography>
-        <Button 
-          color="inherit" 
-          onClick={() => handleNavigation('/', 'home')}
-        >
-          Create URLs
-        </Button>
-        <Button 
-          color="inherit" 
-          onClick={() => handleNavigation('/statistics', 'statistics')}
-        >
-          Statistics
-        </Button>
+        
+        {isMobile ? (
+          <>
+            <IconButton color="inherit" onClick={handleMenuOpen}>
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem onClick={() => handleNavigation('/', 'home')}>
+                Create URLs
+              </MenuItem>
+              <MenuItem onClick={() => handleNavigation('/statistics', 'statistics')}>
+                Statistics
+              </MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <>
+            <Button 
+              color="inherit" 
+              onClick={() => handleNavigation('/', 'home')}
+            >
+              CREATE URLS
+            </Button>
+            <Button 
+              color="inherit" 
+              onClick={() => handleNavigation('/statistics', 'statistics')}
+            >
+              STATISTICS
+            </Button>
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );
