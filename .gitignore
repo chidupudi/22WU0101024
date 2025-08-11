@@ -76,7 +76,7 @@ dist
 
 # Gatsby files
 .cache/
-public
+
 
 # Storybook build outputs
 .out
@@ -104,7 +104,7 @@ Thumbs.db
 
 # React specific
 */build/
-*/public/hot-update*
+
 
 # Package lock files (optional - you can keep these if you want)
 # package-lock.json
