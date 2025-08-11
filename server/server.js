@@ -10,6 +10,7 @@ const redirectRoutes = require('./src/routes/redirectRoutes');
 const app = express();
 const PORT =  8080;
 
+
 // Initialize logging first
 async function startServer() {
     try {
