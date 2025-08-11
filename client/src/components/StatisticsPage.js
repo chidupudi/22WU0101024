@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { Log } from '../utils/logger';
-import UrlForm from '../components/UrlForm';
+import StatsList from '../components/StatsList';
 
-function UrlShortenerPage() {
+function StatisticsPage() {
   useEffect(() => {
     const logPageLoad = async () => {
-      await Log("frontend", "info", "page", "URL Shortener page loaded");
+      await Log("frontend", "info", "page", "Statistics page loaded");
     };
     logPageLoad();
   }, []);
@@ -14,14 +14,14 @@ function UrlShortenerPage() {
   return (
     <Box sx={{ mt: 2 }}>
       <Typography variant="h4" gutterBottom>
-        URL Shortener
+        URL Statistics
       </Typography>
       <Typography variant="body1" color="text.secondary" gutterBottom>
-        Create up to 5 shortened URLs at once
+        View analytics for all your shortened URLs
       </Typography>
-      <UrlForm />
+      <StatsList />
     </Box>
   );
 }
 
-export default UrlShortenerPage;
+export default StatisticsPage;
